@@ -1,6 +1,6 @@
 # bohn-rush
 
-alpaca dinosaurish game!
+alpaca dinosaurish game!  
 corn is coins??
 
 
@@ -12,4 +12,5 @@ third hit: 88ff44 (green)
 fourth hit: ffff00 (yellow)  
 fifth hit: ff8800 (orange)  
 sixth hit: ff0000 (red)  
-seventh hit: 
+
+
