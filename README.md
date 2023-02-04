@@ -9,7 +9,7 @@ original: ffffcc (yellowish)
 first hit: cc00ff (purple)  
 second hit: 4444ff (blue)  
 third hit: 88ff44 (green)  
-fourth hit:
-fifth hit:
-sixth hit: 
+fourth hit: ffff00 (yellow)  
+fifth hit: ff8800 (orange)  
+sixth hit: ff0000 (red)  
 seventh hit: 
