@@ -4,7 +4,7 @@ alpaca dinosaurish game!
 corn is coins??
 
 
-colors for later reference:
+colors for later reference: \n
 original: ffffcc (yellowish)
 first hit: cc00ff (purple)
 second hit: 4444ff (blue)
