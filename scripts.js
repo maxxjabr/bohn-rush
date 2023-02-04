@@ -1,12 +1,19 @@
-const alpaca = BohnDoc.getElementById("alpaca");
-const corn = BohnDoc.getElementById("corn");
+const alpaca = BohnRush.getElementById("alpaca");
+const corn = BohnRush.getElementById("corn");
+const fence = BohnRush.getElementById("fence");
+
 
 function duck() {
-
+  if (alpaca.classList != "duck") {
+    alpaca.classList.add("duck");
+    
+    setTimeout(function () {
+      alpaca.classList.remove("duck");
+    }, 300);
 
 }
 
-function cornHealth() {
+function getCornHealth() {
 
 }
 
@@ -26,16 +33,16 @@ let getBohned = setInterval(function () {
   // get current alpaca Y position
   let alpacaTop = parseInt(window.getComputedStyle(alpaca).getPropertyValue("top"));
   
-  
+  let fenceLeft = parseInt(window.getComputedStyle(fence).getPropertyValue("top"));
   
   // detect collision
-  if ( ) {
+  if (fenceLeft < 50 && fenceLeft > 0 && alpacaTop >= 140) {
   
   //Game over after last alpaca color change
     alert("Get Bohned!");
   }
 }, 10);
 
-BohnDoc.addEventListener("keydown", function (event) {
+BohnRush.addEventListener("keydown", function (event) {
   jump();
 });
