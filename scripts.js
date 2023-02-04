@@ -13,9 +13,9 @@ function duck() {
 
 }
 
-function getCornHealth() {
+// function getCornHealth() {
 
-}
+// }
 
 
 function jump() {
