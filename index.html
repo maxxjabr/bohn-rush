@@ -1,18 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BohnRush</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="bohnrush">
-      <div id="alpaca"></div>
-      <div id="corn"></div>
-      <div id="fence"></div>
-    </div>
-    <img id="alpaca" src="Photos/alpaca1_vanilla.png" style="width:150px; height: auto; position:absolute; left:100px; top:100px">
-    <script src="scripts.js"></script>
-  </body>
+<html>
+    <head>
+        <title>BohnRush</title>
+    </head>
+    <style>
+        body,html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .bg {
+            /* The image used */
+            background-image: url("Photos/bohnBackground.jpg");
+
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+    <body>
+        <div class="bg"></div>
+        <img id="ground" src="Photos/ground.png" style="width:720px; height:auto; position:absolute; left:80px; top:385px">
+        <img id="alpaca" src="Photos/alpaca1_vanilla.png" style="width:150px; height: auto; position:absolute; left:130px; top:250px">
+        <img id="evil bohn" src="evilBohn.jpg" style="width:150px; height: auto; position:absolute; right:0px; top:200px">
+        <!-- <img id="fence1" src="fence.png" style="width:120px; height:auto; position:absolute; left:240px; top:350px"> fence hitbox-->
+        <!-- <img id="fence2" src="fence.png" style="width:120px; height:auto; position:absolute; left:-20px; top:350px"> fence hitbox-->
+        <img id="fence" src="Photos/fence.png" style="width:120px; height:auto; position:absolute; left:1000px; top:350px">
+        <script>
+            
+            const standing_alp = [
+                "Photos/alpaca1_vanilla.png",
+                "Photos/alpaca1_purple.png",
+                "Photos/alpaca1_blue.png",
+                "Photos/alpaca1_green.png",
+                "Photos/alpaca1_yellow.png",
+                "Photos/alpaca1_orange.png",
+                "Photos/alpaca1_red.png",
+            ]
+
+            const running_alp = [
+                "Photos/alpaca2_vanilla.png",
+                "Photos/alpaca2_purple.png",
+                "Photos/alpaca2_blue.png",
+                "Photos/alpaca2_green.png",
+                "Photos/alpaca2_yellow.png",
+                "Photos/alpaca2_orange.png",
+                "Photos/alpaca2_red.png",
+            ]
+
+            const bent_alp = [
+                "Photos/bentalpaca.png",
+                "Photos/bentalpaca_purple.png",
+                "Photos/bentalpaca_blue.png",
+                "Photos/bentalpaca_green.png",
+                "Photos/bentalpaca_yellow.png",
+                "Photos/bentalpaca_orange.png",
+                "Photos/bentalpaca_red.png",
+            ]
+
+            let jump = 10;
+            let alp_ind = 0;
+            let pose = 0;
+
+            document.onkeydown = function(event) {
+                if (event.code === "ArrowUp") {
+                    jump = 1;
+                    document.getElementById("alpaca").style = "width:150px; height: auto; position:absolute; left:130px; top:100px"
+                    pose = 1;
+                    setTimeout(function() {
+                        jump = 10;
+                        document.getElementById("alpaca").style = "width:150px; height: auto; position:absolute; left:130px; top:250px"
+                        pose = 0;
+                    }, 700);
+                }
+
+                if (event.code === "ArrowDown") {
+                    document.getElementById("alpaca").src = bent_alp[alp_ind]
+                    document.getElementById("alpaca").style = "width:150px; height: auto; position:absolute; left:130px; top:280px"
+                    pose = 2;
+                    setTimeout(function() {
+                        document.getElementById("alpaca").src = standing_alp[alp_ind]
+                        document.getElementById("alpaca").style = "width:150px; height: auto; position:absolute; left:130px; top:250px"
+                        pose = 0;
+                    }, 700);
+                }
+            };
+
+            const element = document.getElementById("fence");
+
+            let fence_pos = window.innerWidth;
+
+            let fence_left = parseInt(window.getComputedStyle(fence).getPropertyValue("left"));
+
+            let reps = 10;
+            let done = 0;
+            let n = 0;
+
+            let collisionCounter = 0;
+            //game over/hit damage function, maybe check the color of the alpaca (which alpaca png) to determine when alpaca is hurt/dead
+
+            while (n < reps) {
+                for(let i = 0; i < (fence_pos / 20); i++) {
+                    setTimeout(function() {
+                        fence_pos -= 20;
+                        element.style.left = fence_pos.toString().concat("px");
+                        if (fence_pos < 240 && jump == 0) {
+                            alp_ind++;
+                            console.log(alp_ind)
+                        }
+                        if (fence_pos <= 0) {
+                            element.style.left = "1000px"
+                            fence_pos = window.innerWidth;
+                        }
+                        if (n == (reps - 1) && done == 0) {
+                            element.style.display = "none";
+                            alert("Hooray");
+                            done = 1;
+                        }
+                    }, (50 * i) + (1850 * n));
+                }
+                if (collisionCounter == 6) {
+                    n = reps;
+                }
+                n++
+            }
+
+            let getBohned = setInterval(function () {
+            // get current alpaca Y position
+            let alpacaTop = parseInt(window.getComputedStyle(alpaca).getPropertyValue("top"));
+            
+            let fenceLeft = parseInt(window.getComputedStyle(fence).getPropertyValue("left"));
+            
+            // detect collision
+            if (fenceLeft < 50 && fenceLeft > 0 && alpacaTop >= 140) {
+                switch(collisionCounter) {
+                    case 0:
+                        document.getElementById("alpaca").src = "Photos/alpaca1_purple.png";
+                        setTimeout(console.log("hit"), 10000)
+                        collisionCounter++;
+                        break;
+                    case 1:
+                        document.getElementById("alpaca").src = "Photos/alpaca1_blue.png";
+                        setTimeout(console.log("hit"), 20000)
+                        collisionCounter++;
+                        break;
+                    case 2:
+                        document.getElementById("alpaca").src = "Photos/alpaca1_green.png";
+                        setTimeout(console.log("hit"), 30000)
+                        collisionCounter++;
+                        break;
+                    case 3:
+                        document.getElementById("alpaca").src = "Photos/alpaca1_yellow.png";
+                        setTimeout(console.log("hit"), 40000)
+                        collisionCounter++;
+                        break;
+                    case 4:
+                        document.getElementById("alpaca").src = "Photos/alpaca1_orange.png";
+                        setTimeout(console.log("hit"), 50000)
+                        collisionCounter++;
+                        break;
+                    case 5:
+                        document.getElementById("alpaca").src = "Photos/alpaca1_red.png";
+                        setTimeout(console.log("hit"), 60000)
+                        collisionCounter++;
+                        break;
+                    case 6:
+                        //Game over after last alpaca color change
+                        alert("Get Bohned!");
+                        break;
+                }
+            }
+            }, 10);
+            
+        </script>
+    </body>
 </html>
