@@ -2,6 +2,7 @@ const alpaca = BohnRush.getElementById("alpaca");
 const corn = BohnRush.getElementById("corn");
 const fence = BohnRush.getElementById("fence");
 
+let collisionCounter = 0;
 
 function duck() {
   if (alpaca.classList != "duck") {
@@ -37,9 +38,22 @@ let getBohned = setInterval(function () {
   
   // detect collision
   if (fenceLeft < 50 && fenceLeft > 0 && alpacaTop >= 140) {
-  
-  //Game over after last alpaca color change
-    alert("Get Bohned!");
+    switch(collisionCounter)
+      case 0:
+        BohnRush.getElementById("alpaca").src = "alpaca1_purple.png";
+      case 1:
+        BohnRush.getElementById("alpaca").src = "alpaca1_blue.png";
+      case 2:
+        BohnRush.getElementById("alpaca").src = "alpaca1_green.png";
+      case 3:
+        BohnRush.getElementById("alpaca").src = "alpaca1_yellow.png";  
+      case 4:
+        BohnRush.getElementById("alpaca").src = "alpaca1_orange.png";
+      case 5:
+        BohnRush.getElementById("alpaca").src = "alpaca1_red.png";
+      case 6:
+        //Game over after last alpaca color change
+        alert("Get Bohned!");
   }
 }, 10);
 
